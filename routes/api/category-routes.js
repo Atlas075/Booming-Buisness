@@ -11,11 +11,7 @@ router.get("/", (req, res) => {
     attributes: ["id", "category_name"],
     include: {
       model: Product,
-      attributes: ["id", "product_name", "price", "stock"[
-        (sequelize.literal(
-          "(SELECT COUNT(*) FROM category WHERE category.id = product.id)"
-        ))
-      ],],
+      attributes: ["id", "product_name", "price", "stock"],
     },
   })
     .then((dbCategoryData) => res.json(dbCategoryData))
@@ -34,11 +30,7 @@ router.get("/:id", (req, res) => {
     },
     attributes: [
       "id",
-      "category_name"[
-        (sequelize.literal(
-          "(SELECT COUNT(*) FROM category WHERE category.id = product.id)"
-        ))
-      ],
+      "category_name"
     ],
     include: {
       model: Product,
@@ -68,7 +60,7 @@ router.put("/:id", (req, res) => {
   // update a category by its `id` value
   Category.update(
     {
-      title: req.body.title,
+      category_name: req.body.category_name,
     },
     {
       where: {
@@ -77,7 +69,7 @@ router.put("/:id", (req, res) => {
     }
   )
     .then((dbCategoryData) => {
-      if (!dbPostData) {
+      if (!dbCategoryData) {
         res.status(404).json({ message: "No category found with this id" });
         return;
       }

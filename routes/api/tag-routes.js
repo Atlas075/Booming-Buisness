@@ -11,11 +11,6 @@ router.get("/", (req, res) => {
     attributes: [
       "id",
       "tag_name",
-      // [
-      //   sequelize.literal(
-      //     "(SELECT COUNT(*) FROM tag WHERE tag.id = product.id)", ""
-      //   ),
-      // ],
     ],
     include: [
       {
@@ -41,20 +36,11 @@ router.get("/:id", (req, res) => {
     attributes: [
       "id",
       "tag_name",
-      [
-        sequelize.literal(
-          "(SELECT COUNT(*) FROM tag WHERE tag.id = product.id)"
-        ),
-      ],
     ],
     include: [
       {
         model: Product,
         attributes: ["id", "product_name", "price", "stock", "category_id"],
-      },
-      {
-        model: ProductTag,
-        attributes: ["id", "product_id", "tag_id"],
       },
     ],
   })
