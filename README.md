@@ -10,3 +10,7 @@ the requirement for my project are
 (inquirer, dodenv, sql, sqequalize and node)
 
 ## schreenshot
+
+
+## video
+
